@@ -11,10 +11,16 @@ class QuestionConfiguration(object):
     def convert_value(self, value):
         return value
 
+    def convert_value_to_int(self, value):
+        return int(value)
+
 
 class TextConfiguration(QuestionConfiguration):
     def __init__(self):
-        QuestionConfiguration.__init__(self, False, [ValidatorType.REQUIRED, ValidatorType.MIN_LENGTH])
+        QuestionConfiguration.__init__(self, False, [ValidatorType.REQUIRED,
+                                                     ValidatorType.MIN_LENGTH,
+                                                     ValidatorType.MAX_LENGTH,
+                                                     ValidatorType.ONLY_UPPER])
 
 
 class DateConfiguration(QuestionConfiguration):
@@ -35,10 +41,17 @@ class PickOneQuestionConfiguration(QuestionConfiguration):
         QuestionConfiguration.__init__(self, True, [ValidatorType.REQUIRED])
 
 
+class NumericQuestionConfiguration(QuestionConfiguration):
+    def __init__(self):
+        QuestionConfiguration.__init__(self, False, [ValidatorType.REQUIRED,
+                                                     ValidatorType.MIN])
+
+
 class QuestionType(Enum):
     TEXT = (1, TextConfiguration())
     DATE = (2, DateConfiguration())
     PICK_ONE = (3, PickOneQuestionConfiguration())
+    NUMERIC = (4, NumericQuestionConfiguration())
 
     def __init__(self, code, configuration):
         self.code = code

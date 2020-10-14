@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 
+from quizc.console.quiz_ui_handler import QuizUIHandler
 from quizc.console.quiz_ui_menu import QuestionUIMenu
 from quizc.model.question_type import QuestionType
 from quizc.model.validations import ValidatorType
@@ -9,6 +10,7 @@ from quizc.model.validations import ValidatorType
 class QuestionUIMenuTest(unittest.TestCase):
     QUESTION_TITLE = "My zuper question"
     EXIT = "0"
+    SHOW_QUIZ = "3"
     INVALID_QUESTION_TYPE = "10"
 
     @patch('builtins.input', side_effect=[QuestionType.TEXT.code])
@@ -29,7 +31,7 @@ class QuestionUIMenuTest(unittest.TestCase):
     def test_menu_ask_question_title(self, mock_input):
         menu = QuestionUIMenu()
         title = menu.ask_question_title()
-        self.assertNotEqual(title, self.QUESTION_TITLE)
+        self.assertEqual(title, self.QUESTION_TITLE)
 
     @patch('builtins.input', side_effect=[ValidatorType.MIN_LENGTH.code, ValidatorType.REQUIRED.code, EXIT])
     def test_menu_ask_question_validators(self, mock_input):

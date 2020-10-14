@@ -15,4 +15,8 @@ class Answer(object):
     def __init__(self, answers, question):
         self.question = question
         self.answers = answers
-
+    def __str__(self):
+        res= str(self.question) + ":"
+        for a in self.answers:
+            res += a+","
+        return res
